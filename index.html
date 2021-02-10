@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>数字起卦</title>
+		<style type="text/css">
+			*{ margin:0px; padding:0px;}
+			.clear{ margin:0px; padding:0px; clear:both;}
+			.clear-fix { *overflow: hidden; *zoom: 1;}
+			.clear-fix:after { display: table; content: ""; width: 0; clear: both;}
+			html,div,dl,dt,dd,ul,h1,h2,h3,pre,form,label,fieldset,textarea,p,blockquote,table,input{font-size:12px;margin:0;padding:0; font:14px Helvetica Neue,Helvetica,PingFang SC,\5FAE\8F6F\96C5\9ED1,Tahoma,Arial,sans-serif;} 
+			fieldset,img{border:0}
+			code,em,var,i,b{font-style:normal;}
+			ul{list-style:none}
+			li {list-style-type: none;}
+			header{ position:fixed; left:0; top:0; width:100%; /*height:50px; line-height:50px; */z-index:10;}
+			.clearfloat{height:0;font-size:1px;clear:both;line-height:0;}
+			a{ color:#000;}
+			span:hover{text-decoration:none;}
+			a{text-decoration:none;}
+			
+			body{
+				background-color: #f5f5f5;
+			}
+			.main{
+				overflow: hidden;
+				width: 15rem;
+				margin: 0.75rem auto 0;
+			}
+			.inp{
+				padding-top: 1.5rem;
+				text-align: center;
+			}
+			.inp input{
+				padding: 0 0.125rem;
+				width: 5rem;
+				height: 0.8rem;
+				border: 1px solid #323232;
+				border-radius: 0.15rem;
+				font-size: 0.4rem;
+				box-sizing: border-box;
+			}
+			.inp h1{
+				padding-bottom: 0.5rem;
+				font-size: 0.6rem;
+			}
+			.inps{
+				display: flex;
+				justify-content: center;
+			}
+			.inps button{
+				margin-left: 0.2rem;
+				width: 1.2rem;
+				height: 0.8rem;
+				font-size: 0.4rem;
+			}
+			.guaxiang{
+				float: left;
+				margin-top: 0.9rem;
+			}
+			.guaxiang ul{
+				width: 6rem;
+			}
+			.guaxiang li{
+				position: relative;
+				height: 0.75rem;
+				/* border: 1px solid red; */
+				margin-bottom: 0.5rem;
+			}
+			.guaxiang li .yao{
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				display: none;
+			}
+			.guaxiang li .yao0:before{
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				width: 2.6rem;
+				background-color: #000000;
+			}
+			.guaxiang li .yao0:after{
+				content: "";
+				position: absolute;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				width: 2.6rem;
+				background-color: #000000;
+			}
+			.guaxiang li .yao1{
+				content: "";
+				position: absolute;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				background-color: #000000;
+				display: none;
+			}
+			.fenxi{
+				float: right;
+			}
+			.fenxi table{
+				border: 1px solid #323232;
+			}
+			.fenxi table th{
+				font-size: 0.4rem;
+			}
+			.fenxi table td{
+				width: 2rem;
+				height: 1.2rem;
+				text-align: center;
+				font-size: 0.45rem;
+				border: none;
+			}
+			.fenxi table td.red{
+				color: red;
+			}
+			.fenxi table td.green{
+				color: green;
+			}
+			.guaming{
+				padding-top: 0.5rem;
+				text-align: center;
+			}
+			#guatitle{
+				font-size: 1rem;
+				font-weight: bold;
+			}
+			@media screen and (max-width: 768px) {
+				.inps{
+					margin: 0 0.5rem;
+				}
+				.inp h1{
+					font-size: 2rem;
+				}
+				#shuzi{
+					width: 14rem;
+					height: 2rem;
+					font-size: 1.2rem;
+				}
+				#qigua{
+					height: 2rem;
+					width: 2.6rem;
+					font-size: 1rem;
+				}
+				#guatitle{
+					font-size: 2rem;
+				}
+				.main{
+					margin: 0.25rem auto 0;
+				}
+				.guaxiang{
+					float: none;
+				}
+				.guaxiang ul{
+					width: auto;
+				}
+				.fenxi{
+					float: none;
+				}
+				.fenxi table{
+					width: 100%;
+				}
+				.guaxiang li{
+					height: 1.25rem;
+				}
+				.guaxiang li .yao0:before{
+					width: 44%;
+				}
+				.guaxiang li .yao0:after{
+					width: 44%;
+				}
+				.fenxi table th{
+					font-size: 1rem;
+				}
+				.fenxi table td{
+					height: 2rem;
+					font-size: 1rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="inp">
+			<h1>数字起卦</h1>
+			<div class="inps">
+				<input type="number" value="" id="shuzi" placeholder="请输入数字"/>
+				<button id="qigua">起卦</button>
+			</div>
+		</div>
+		<div class="guaming">
+			<h2 id="guatitle"></h2>
+		</div>
+		<div class="main">
+			<div class="guaxiang">
+				<ul>
+					<li>
+						<div class="yao yao0"></div>
+						<div class="yao yao1"></div>
+					</li>
+					<li>
+						<div class="yao yao0"></div>
+						<div class="yao yao1"></div>
+					</li>
+					<li>
+						<div class="yao yao0"></div>
+						<div class="yao yao1"></div>
+					</li>
+					<li>
+						<div class="yao yao0"></div>
+						<div class="yao yao1"></div>
+					</li>
+					<li>
+						<div class="yao yao0"></div>
+						<div class="yao yao1"></div>
+					</li>
+					<li>
+						<div class="yao yao0"></div>
+						<div class="yao yao1"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="fenxi">
+				<table>
+					<thead>
+						<tr><th>爻位</th><th>顺逆</th><th>呼应</th><th>正偏</th></tr>
+					</thead>
+					<tbody>
+						<tr><td></td><td></td><td></td><td></td></tr>
+						<tr><td></td><td></td><td></td><td></td></tr>
+						<tr><td></td><td></td><td></td><td></td></tr>
+						<tr><td></td><td></td><td></td><td></td></tr>
+						<tr><td></td><td></td><td></td><td></td></tr>
+						<tr><td></td><td></td><td></td><td></td></tr>
+					</tbody>
+					
+				</table>
+			</div>
+		</div>
+		<div class="mask" style="display: none;"></div>
+		<script src="https://libs.baidu.com/jquery/1.9.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			resetrem();
+			//切换屏幕 （横屏竖屏）
+			window.addEventListener("orientationchange", resetrem);
+			//resize：屏幕的大小发生改变就触发监听事件resetrem
+			window.addEventListener("resize",resetrem);
+			
+			function resetrem(){
+			    var html = document.querySelector("html");//获取到html元素
+			    var width = html.getBoundingClientRect().width;//获取屏幕的宽度
+			    html.style.fontSize = width/30+"px";
+			}
+			
+			let _64guaArr = {'00':'纯坤卦','10':'雷地豫卦','20':'水地比卦','30':'泽地萃卦','40':'山地剥卦','50':'火地晋卦','60':'风地观卦','70':'天地否挂',
+				'01':'地雷复卦','11':'纯震卦','21':'水雷屯卦','31':'泽雷随卦','41':'山雷颐卦','51':'火雷噬嗑卦','61':'风雷益卦','71':'天雷无妄卦',
+				'02':'地水师卦','12':'雷水解卦','22':'纯坎卦','32':'泽水困卦','42':'山水蒙卦','52':'火水未济卦','62':'风水涣卦','72':'天水讼卦',
+				'03':'地泽临卦','13':'雷泽归姝卦','23':'水泽节卦','33':'纯兑卦','43':'山泽损卦','53':'火泽睽卦','63':'风泽中孚卦','73':'天泽履卦',
+				'04':'地山谦卦','14':'雷山小过卦','24':'水山蹇卦','34':'泽山咸卦','44':'纯艮卦','54':'火山旅卦','64':'风山渐卦','74':'天山遁卦',
+				'05':'地火明夷卦','15':'雷火丰卦','25':'水火既济卦','35':'泽火革卦','45':'山火贲卦','55':'纯离卦','65':'风火家人卦','75':'天火同人卦',
+				'06':'地风升卦','16':'雷风恒卦','26':'水风井卦','36':'泽风大过卦','46':'山风蛊卦','56':'火风鼎卦','66':'纯巽卦','76':'天风姤卦',
+				'07':'地天泰卦','17':'雷天大壮','27':'水天需卦','37':'泽天夬卦','47':'山天大畜卦','57':'火天大有卦','67':'风天小畜','77':'纯乾卦'}
+			
+			
+			let yaoweiTxt = ['上','五','四','三','二','初']
+			let guaName = ''
+			
+			//回车
+			$(document).on("keypress","#shuzi",function(e){
+				if(e.keyCode == 13){
+					suangua()
+				}
+			})
+			//点击起卦按钮
+			$(document).on("click","#qigua",function(){
+				suangua()
+			})
+			
+			function converStr(str){//给数字字符串添加逗号分隔符
+				if(/\./.test(str)){
+					return str.replace(/\d(?=(\d{1})+\.)/g, "$&,").split("").reverse().join("").replace(/\d(?=(\d{1})+\.)/g, "$&,").split("").reverse().join("");
+				}else{
+					return str.replace(/\d(?=(\d{1})+$)/g, "$&,");
+				}
+			}
+			
+			//十进制转二进制
+			function binary(num) {
+				console.log(num)
+				if(num === 0){
+					return '000'
+				}
+				var resArry = [];
+				var xresArry = [];
+				i = 0;
+				//除2取余
+				for (; num > 0;) {
+				 resArry.push(num % 2);
+				 num = parseInt(num / 2);
+				 i++;
+				}
+				//倒序排列
+				for (j = i - 1; j >= 0; j--) {
+				 xresArry.push(resArry[j]);
+				}
+				if(xresArry.length === 1){
+					xresArry.unshift(0)
+					xresArry.unshift(0)
+				}else if(xresArry.length === 2){
+					xresArry.unshift(0)
+				}
+				return xresArry.join().replace(/,/g, "");
+			}
+			
+			function suangua(e){
+				
+				let shuzi = $("#shuzi").val()
+				
+				let waiNumArr = converStr(shuzi.substring(0,shuzi.length-1)).split(",")
+				let neiNumArr = converStr(shuzi).split(",")
+				
+				let sumWai=0,sumNei=0;
+				let waiNumHe = waiNumArr.map((val,index,arr)=>{
+					sumWai += Number(val)
+				})
+				let neiNumHe = neiNumArr.map((val,index,arr)=>{
+					sumNei += Number(val)
+				})
+			
+				let waiGua = sumWai%8;
+				let neiGua = sumNei%8;
+				console.log("外挂"+waiGua);
+				console.log("内挂"+neiGua);
+				
+				
+				
+				console.log("二进制外挂"+binary(waiGua));
+				console.log("二进制内挂"+binary(neiGua));
+			
+				let liuyao = binary(waiGua) + binary(neiGua)
+				console.log(liuyao)
+				let liuyaoArr = converStr(liuyao).split(",") //六爻数组
+				console.log(liuyaoArr)
+				$(liuyaoArr).each(function(index,el){
+					if(el === '0'){
+						$(".guaxiang li").eq(index).find('.yao0').show()
+						$(".guaxiang li").eq(index).find('.yao1').hide()
+					}else{
+						$(".guaxiang li").eq(index).find('.yao1').show()
+						$(".guaxiang li").eq(index).find('.yao0').hide()
+					}
+				})
+				
+				//清除上一次表格颜色
+				$(".fenxi table td").removeClass("green").removeClass("red").text('')
+				
+				//写表格
+				$(liuyaoArr).each(function(index,el){
+					//生成卦名
+					let numTxt = waiGua +''+neiGua
+					guaName = _64guaArr[numTxt]
+					
+					//爻位
+					let yaowei = $('.fenxi tbody tr').eq(index).find("td").eq(0)
+					//如果是第一位或者最后一位
+					if(index === 0 || index === 5){
+						if(el === '0'){
+							yaowei.text(yaoweiTxt[index] + '六')
+						}else{
+							yaowei.text(yaoweiTxt[index] + '九')
+						}
+					}else{
+						if(el === '0'){
+							yaowei.text('六' + yaoweiTxt[index])
+						}else{
+							yaowei.text('九' + yaoweiTxt[index])
+						}
+					}
+					
+					//顺逆
+					let yaowei1 = $('.fenxi tbody tr').eq(index).find("td").eq(1)
+					if(index > 0){
+						if(el !== liuyaoArr[index - 1]){
+							yaowei1.text('顺').addClass('green')
+						}else{
+							yaowei1.text('逆').addClass('red')
+						}
+					}
+					
+					//呼应
+					let yaowei2 = $('.fenxi tbody tr').eq(index).find("td").eq(2)
+					if(index <= 2){
+						if(el !== liuyaoArr[index + 3]){
+							yaowei2.text('有应').addClass('green')
+							$('.fenxi tbody tr').eq(index+3).find("td").eq(2).text('有应').addClass('green')
+						}else{
+							yaowei2.text('不应').addClass('red')
+							$('.fenxi tbody tr').eq(index+3).find("td").eq(2).text('不应').addClass('red')
+						}
+					}
+					
+					//正偏
+					let yaowei3 = $('.fenxi tbody tr').eq(index).find("td").eq(3)
+					if(index%2 === 0){
+						if(el === '0'){
+							yaowei3.text('正').addClass('green')
+						}else{
+							yaowei3.text('不正').addClass('red')
+						}
+					}else{
+						if(el === '1'){
+							yaowei3.text('正').addClass('green')
+						}else{
+							yaowei3.text('不正').addClass('red')
+						}
+					}
+				})
+				$('#guatitle').text(guaName)
+			}
+		</script>
+	</body>
+</html>
