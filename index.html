@@ -50,6 +50,7 @@
 				display: flex;
 				justify-content: center;
 			}
+
 			.inps button{
 				margin-left: 0.2rem;
 				width: 1.2rem;
@@ -139,15 +140,20 @@
 				.inps{
 					margin: 0 0.5rem;
 				}
+				.inpsName{
+					margin-top: 0.5rem;
+				}
 				.inp h1{
 					font-size: 2rem;
 				}
-				#shuzi{
+				#shuzi,
+				#guaName{
 					width: 14rem;
 					height: 2rem;
 					font-size: 1.2rem;
 				}
-				#qigua{
+				#qigua,
+				#qiguaByName{
 					height: 2rem;
 					width: 2.6rem;
 					font-size: 1rem;
@@ -195,6 +201,10 @@
 			<div class="inps">
 				<input type="number" value="" id="shuzi" placeholder="请输入数字"/>
 				<button id="qigua">起卦</button>
+			</div>
+			<div class="inps inpsName">
+				<input type="text" value="" id="guaName" placeholder="请输入卦名"/>
+				<button id="qiguaByName">查看</button>
 			</div>
 		</div>
 		<div class="guaming">
@@ -270,6 +280,14 @@
 				'06':'地风升卦','16':'雷风恒卦','26':'水风井卦','36':'泽风大过卦','46':'山风蛊卦','56':'火风鼎卦','66':'纯巽卦','76':'天风姤卦',
 				'07':'地天泰卦','17':'雷天大壮','27':'水天需卦','37':'泽天夬卦','47':'山天大畜卦','57':'火天大有卦','67':'风天小畜','77':'纯乾卦'}
 			
+			let _64guaArrByName = {'纯坤卦':'00','雷地豫卦':'10','水地比卦':'20','泽地萃卦':'30','山地剥卦':'40','火地晋卦':'50','风地观卦':'60','天地否挂':'70',
+				'地雷复卦':'01','纯震卦':'11','水雷屯卦':'21','泽雷随卦':'31','山雷颐卦':'41','火雷噬嗑卦':'51','风雷益卦':'61','天雷无妄卦':'71',
+				'地水师卦':'02','雷水解卦':'12','纯坎卦':'22','泽水困卦':'32','山水蒙卦':'42','火水未济卦':'52','风水涣卦':'62','天水讼卦':'72',
+				'地泽临卦':'03','雷泽归姝卦':'13','水泽节卦':'23','纯兑卦':'33','山泽损卦':'43','火泽睽卦':'53','风泽中孚卦':'63','天泽履卦':'73',
+				'地山谦卦':'04','雷山小过卦':'14','水山蹇卦':'24','泽山咸卦':'34','纯艮卦':'44','火山旅卦':'54','风山渐卦':'64','天山遁卦':'74',
+				'地火明夷卦':'05','雷火丰卦':'15','水火既济卦':'25','泽火革卦':'35','山火贲卦':'45','纯离卦':'55','风火家人卦':'65','天火同人卦':'75',
+				'地风升卦':'06','雷风恒卦':'16','水风井卦':'26','泽风大过卦':'36','山风蛊卦':'46','火风鼎卦':'56','纯巽卦':'66','天风姤卦':'76',
+				'地天泰卦':'07','雷天大壮':'17','水天需卦':'27','泽天夬卦':'37','山天大畜卦':'47','火天大有卦':'57','风天小畜':'67','纯乾卦':'77'}
 			
 			let yaoweiTxt = ['上','五','四','三','二','初']
 			let guaName = ''
@@ -283,6 +301,9 @@
 			//点击起卦按钮
 			$(document).on("click","#qigua",function(){
 				suangua()
+			})
+			$(document).on("click","#qiguaByName",function(){
+				suangua(true)
 			})
 			
 			function converStr(str){//给数字字符串添加逗号分隔符
@@ -321,7 +342,7 @@
 				return xresArry.join().replace(/,/g, "");
 			}
 			
-			function suangua(e){
+			function suangua(isByName){
 				
 				let shuzi = $("#shuzi").val()
 				
@@ -338,6 +359,13 @@
 			
 				let waiGua = sumWai%8;
 				let neiGua = sumNei%8;
+
+				if(isByName){
+					let guaName = $("#guaName").val()
+					let guaNum = _64guaArrByName[guaName]
+					waiGua = guaNum[0]
+					neiGua = guaNum[1]
+				}
 				console.log("外挂"+waiGua);
 				console.log("内挂"+neiGua);
 				
@@ -367,6 +395,7 @@
 				$(liuyaoArr).each(function(index,el){
 					//生成卦名
 					let numTxt = waiGua +''+neiGua
+					console.log(numTxt)
 					guaName = _64guaArr[numTxt]
 					
 					//爻位
