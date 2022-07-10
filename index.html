@@ -25,9 +25,13 @@
 				background-color: #f5f5f5;
 			}
 			.main{
-				overflow: hidden;
 				width: 15rem;
 				margin: 0.75rem auto 0;
+			}
+			.main:after{
+				content: "";
+				display: block;
+				clear: both;
 			}
 			.inp{
 				padding-top: 1.5rem;
@@ -60,6 +64,20 @@
 			.guaxiang{
 				float: left;
 				margin-top: 0.9rem;
+				position: relative;
+			}
+			.guaxiang .yinyang{
+				position: absolute;
+				left: -2rem;
+				top: 50%;
+				transform: translateY(-50%);
+				display: flex;
+    			flex-direction: column;
+				height: 7rem;
+				justify-content: space-evenly;
+			}
+			.guaxiang .yinyang span{
+				font-size: 1.2rem;
 			}
 			.guaxiang ul{
 				width: 6rem;
@@ -212,6 +230,10 @@
 		</div>
 		<div class="main">
 			<div class="guaxiang">
+				<div class="yinyang">
+					<span class="yinyangTop"></span>
+					<span class="yinyangBottom"></span>
+				</div>
 				<ul>
 					<li>
 						<div class="yao yao0"></div>
@@ -289,6 +311,8 @@
 				'地风升卦':'06','雷风恒卦':'16','水风井卦':'26','泽风大过卦':'36','山风蛊卦':'46','火风鼎卦':'56','纯巽卦':'66','天风姤卦':'76',
 				'地天泰卦':'07','雷天大壮':'17','水天需卦':'27','泽天夬卦':'37','山天大畜卦':'47','火天大有卦':'57','风天小畜':'67','纯乾卦':'77'}
 			
+			let yinyang = {0:'阴',1:'阳',2:'阳',3:'阴',4:'阳',5:'阴',6:'阴',7:'阳'} //坤震坎兑艮离巽乾
+
 			let yaoweiTxt = ['上','五','四','三','二','初']
 			let guaName = ''
 			
@@ -369,6 +393,8 @@
 				console.log("外挂"+waiGua);
 				console.log("内挂"+neiGua);
 				
+				$('.yinyangTop').text(yinyang[waiGua])
+				$('.yinyangBottom').text(yinyang[neiGua])
 				
 				
 				console.log("二进制外挂"+binary(waiGua));
