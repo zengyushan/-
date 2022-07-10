@@ -39,7 +39,7 @@
 			}
 			.inp input{
 				padding: 0 0.125rem;
-				width: 5rem;
+				width: 6rem;
 				height: 0.8rem;
 				border: 1px solid #323232;
 				border-radius: 0.15rem;
@@ -55,11 +55,13 @@
 				justify-content: center;
 			}
 
-			.inps button{
+			.inps .button{
 				margin-left: 0.2rem;
 				width: 1.2rem;
-				height: 0.8rem;
+				height: 0.74rem;
+				line-height: 0.74rem;
 				font-size: 0.4rem;
+				border: 1px solid #323232;
 			}
 			.guaxiang{
 				float: left;
@@ -166,13 +168,14 @@
 				}
 				#shuzi,
 				#guaName{
-					width: 14rem;
+					width: 16rem;
 					height: 2rem;
 					font-size: 1.2rem;
 				}
 				#qigua,
 				#qiguaByName{
-					height: 2rem;
+					height: 1.87rem;
+					line-height: 1.87rem;
 					width: 2.6rem;
 					font-size: 1rem;
 				}
@@ -218,11 +221,11 @@
 			<h1>数字起卦</h1>
 			<div class="inps">
 				<input type="number" value="" id="shuzi" placeholder="请输入数字"/>
-				<button id="qigua">起卦</button>
+				<a class="button" id="qigua">起卦</a>
 			</div>
 			<div class="inps inpsName">
-				<input type="text" value="" id="guaName" placeholder="请输入卦名"/>
-				<button id="qiguaByName">查看</button>
+				<input type="text" value="" id="guaName" placeholder="请输入卦名，最后带上'卦'字"/>
+				<a class="button" id="qiguaByName">查看</a>
 			</div>
 		</div>
 		<div class="guaming">
